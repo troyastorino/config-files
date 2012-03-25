@@ -1,0 +1,50 @@
+### Run `git config --global core.excludesfile path/to/.gitignore_global`
+
+# Leiningen
+pom.xml
+*.jar
+/lib/
+/classes/
+.lein-failures
+.lein-deps-sum
+
+# Dropbox
+.dropbox
+
+# Node.js
+/node_modules/
+/npm-debug.log/
+
+# Latex
+*.do
+*.log
+*.aux
+
+## Following based off GitHub recommendation
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages (better to upack and commit raw source)
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# Databases
+*.sql
+*.sqlite
+dump.rdb
+
+# OS generated files
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
