@@ -16,7 +16,6 @@
                       auctex
                       regex-tool
                       markdown-mode
-                      js2-mode
                       flymake-jshint)
   "A list of packages to ensure are installed at launch.")
 
@@ -30,10 +29,6 @@
 ;; Cosmetic changes
 (global-rainbow-delimiters-mode)
 (set-face-attribute 'default nil :height 100) ;10 pt font
-
-;; Set js2-mode to be default
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; Customizations for LaTeX
 (setq TeX-auto-save t)
