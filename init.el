@@ -6,6 +6,7 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+
 (defvar my-packages '(starter-kit
                       starter-kit-lisp
                       starter-kit-bindings
@@ -23,12 +24,31 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-;; Changed key mappings
+;; load color theme
+(load-theme 'misterioso)
+
+;; Change some key mappings
 (define-key global-map (kbd "RET") 'newline-and-indent)
+(define-key global-map "\M-g" 'goto-line)
+
+;; Move between windows with arrow keys
+(global-set-key [M-S-left] 'windmove-left)          ; move to left windnow
+(global-set-key [M-S-right] 'windmove-right)        ; move to right window
+(global-set-key [M-S-up] 'windmove-up)              ; move to upper window
+(global-set-key [M-S-down] 'windmove-down)          ; move to downer window
 
 ;; Cosmetic changes
 (global-rainbow-delimiters-mode)
-(set-face-attribute 'default nil :height 100) ;10 pt font
+(set-face-attribute 'default nil :height 80)
+
+;; set matlab files to default to octave mode
+(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+
+;; org-mode
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-font-lock-mode 1)
 
 ;; Customizations for LaTeX
 (setq TeX-auto-save t)
