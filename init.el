@@ -17,7 +17,8 @@
                       auctex
                       regex-tool
                       markdown-mode
-                      flymake-jshint)
+                      flymake-jshint
+                      org-install)
   "A list of packages to ensure are installed at launch.")
 
 (dolist (p my-packages)
@@ -49,6 +50,7 @@
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-font-lock-mode 1)
+(setq org-log-done t)
 
 ;; Customizations for LaTeX
 (setq TeX-auto-save t)
