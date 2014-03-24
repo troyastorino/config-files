@@ -8,10 +8,17 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-;; add packages installed outside of the package manager
-;(add-to-list 'load-path "~/.emacs.d/vendor")
-;(add-to-list 'load-path "~/.emacs.d/vendor/jade-mode/sws-mode.el")
-;(add-to-list 'load-path "~/.emacs.d/vendor/jade-mode/jade-mode.el")
+;; add el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(el-get 'sync)
 
 (defvar my-packages '(starter-kit
                       starter-kit-lisp
@@ -19,15 +26,14 @@
                       starter-kit-eshell
                       starter-kit-js
                       clojure-mode
+                      nrepl
                       rainbow-delimiters
                       auctex
                       regex-tool
                       markdown-mode
-                      ;js2-mode
                       flymake-jshint
                       org
-                      ;sws-mode
-                      ;jade-mode
+                      ipython
                       )
   "A list of packages to ensure are installed at launch.")
 
@@ -35,12 +41,61 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+(defvar code-editing-mode-hooks '(c-mode-common-hook
+                                  clojure-mode-hook
+                                  emacs-lisp-mode-hook
+                                  java-mode-hook
+                                  js-mode-hook
+                                  lisp-mode-hook
+                                  perl-mode-hook
+;                                  python-mode-hook ; for some reason very slow
+;                                  in python
+                                  sh-mode-hook))
+
+;; Add a hs-minor-mode hook to code editing major modes
+(dolist (mode code-editing-mode-hooks)
+  (add-hook mode 'hs-minor-mode))
+
+;; Make show-trailing-whitespace default
+(setq-default show-trailing-whitespace t)
+
+;; set global indent
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq css-indent-offset 2)
+(setq js-indent-offset 2)
+(setq python-indent-offset 2)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
+;; Fix broken flymake xml init
+(defun flymake-xml-init ()
+  (list "xmllint" (list "--valid" (flymake-init-create-temp-buffer-copy 'flymake-create-temp-inplace))))
+
 (add-to-list 'auto-mode-alist '("\.cljs$" . clojure-mode))
 
 ;; set matlab files to default to octave mode
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
-;; load color theme
+;; set defaluts for markdown mode
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
+
+;; add cython files to python mode
+(add-to-list 'auto-mode-alist '("\\.pyx$" . python-mode))
+(add-to-list 'auto-mode-alist '("\\.pxd$" . python-mode))
+
+;; add .hamlc to haml-mode
+(add-to-list 'auto-mode-alist '("\\.hamlc$" . haml-mode))
+
+;; set python tabs
+(add-hook 'python-mode-hook
+          (function (lambda ()
+                      (setq tab-width 2))))
+
+;; set tab
+
+
+;; loadrom color theme
 (load-theme 'misterioso)
 
 ;; Change some key mappings
@@ -109,3 +164,40 @@
 ;; For SpaceX, make .dispersion and .simulation files json
 (add-to-list 'auto-mode-alist '("\\.dispersion" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.simulation" . js-mode))
+
+;; jake files
+(add-to-list 'auto-mode-alist '("\\.jake" . js-mode))
+(add-to-list 'auto-mode-alist '("Jakefile" . js-mode))
+
+;; nrepl configuration
+(add-hook 'nrepl-interaction-mode-hook
+          'nrepl-turn-on-eldoc-mode)
+(setq nrepl-lein-command "lein")
+
+;; Make flymake GUI warnings show up in the mini-buffer
+(defun flymake-display-warning (warning) 
+  "Display a warning to the user, using lwarn"
+  (message warning))
+
+;; scss mode
+(setq scss-compile-at-save nil)
+
+;; setup pyde
+;(pyde-enable)
+;(pyde-use-ipython)
+
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -1,7 +1,7 @@
 # Location: ~
 
 # add locations to path
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # add android sdk tools to path
 export PATH=$PATH:/Applications/android-sdk-macosx/tools:/Applications/android-sdk-macosx/platform-tools
@@ -9,9 +9,15 @@ export PATH=$PATH:/Applications/android-sdk-macosx/tools:/Applications/android-s
 # put https://github.com/leftnode/get-shit-done on path
 export PATH=$PATH:~/source/get-shit-done
 
-# configure emacs commands for emacs 24
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
-alias emacsclient='/usr/local/Cellar/emacs/HEAD/bin/emacsclient'
+# put stuff for Bher Church on path and create vicare env variable
+export VICARE_LIBRARY_PATH=~/source/bher:~/source/scheme-tools
+export PATH=$PATH:$VICARE_LIBRARY_PATH
+
+# add installed python packages to python path
+export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
+
+# add npm to path
+export PATH=$PATH:/usr/local/share/npm/bin
 
 # set emacs as default editor
 export EDITOR=emacs
@@ -24,3 +30,5 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
