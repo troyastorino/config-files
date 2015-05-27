@@ -19,8 +19,8 @@ export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
 # add npm to path
 export PATH=$PATH:/usr/local/share/npm/bin
 
-# set emacs as default editor
-export EDITOR=emacs
+# set java home
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 
 # add colors to terminal
 export CLICOLOR=1
