@@ -17,14 +17,14 @@
         ("org" . "http://orgmode.org/elpa/")))
 
 ;; add el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-(el-get 'sync)
+;; (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+;; (unless (require 'el-get nil 'noerror)
+;;   (with-current-buffer
+;;       (url-retrieve-synchronously
+;;        "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+;;     (goto-char (point-max))
+;;     (eval-print-last-sexp)))
+;; (el-get 'sync)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -45,6 +45,7 @@
                       paredit
                       rainbow-delimiters
                       regex-tool
+                      web-mode
                       smex)
   "A list of packages to ensure are installed at launch.")
 
